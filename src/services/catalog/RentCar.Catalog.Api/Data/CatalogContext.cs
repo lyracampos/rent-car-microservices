@@ -10,18 +10,15 @@ namespace RentCar.Catalog.Api.Data
         private IMongoDatabase mongoDatabase;
 
         public CatalogContext(IOptions<DatabaseSettings> options)
-        { 
-            var client = new MongoClient(options.Value.ConnectionString);
-            mongoDatabase = client.GetDatabase(options.Value.DatabaseName);
-        }
-        public IMongoCollection<Product> Products 
         {
-            get
-            {
-                return mongoDatabase.GetCollection<Product>
-                    (nameof(Product));
-            }
+            var client = new MongoClient(options.Value.ConnectionString);
+            var database = client.GetDatabase(options.Value.DatabaseName);
+
+            Products = database.GetCollection<Product>(options.Value.CollectionName);
+            CatalogContextSeed.SeedData(Products);
         }
+
+        public IMongoCollection<Product> Products { get; }
 
         private bool disposedValue = false;
 
@@ -35,7 +32,7 @@ namespace RentCar.Catalog.Api.Data
         {
             if (!disposedValue)
             {
-                //mongoDatabase = null;
+                mongoDatabase = null;
                 disposedValue = true;
             }
         }
