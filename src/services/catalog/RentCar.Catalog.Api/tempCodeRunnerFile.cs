@@ -1,0 +1,1 @@
+services.AddScoped<ICatalogContext, CatalogContext>();

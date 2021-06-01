@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RentCar.Catalog.Api.Data;
+using RentCar.Catalog.Api.Settings;
 
 namespace RentCar.Catalog.Api
 {
@@ -26,6 +28,9 @@ namespace RentCar.Catalog.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
+            services.AddScoped<ICatalogContext, CatalogContext>();
+             
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
