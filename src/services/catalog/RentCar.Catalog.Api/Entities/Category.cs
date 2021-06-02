@@ -6,6 +6,7 @@ namespace RentCar.Catalog.Api.Entities
         {
             Name = name;
             Description = description;
+            Slug = Name.ToLowerInvariant().Replace(" ", "-");
         }
 
         public string Name { get; private set; }
