@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    image: mongo
+
+  rentcar.catalog.api:
+    image: ${DOCKER_REGISTRY-}rentcarcatalog
+    build:
+      context: .
+      dockerfile: services/catalog/RentCar.Catalog.Api/Dockerfile
