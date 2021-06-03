@@ -25,6 +25,11 @@ namespace RentCar.Catalog.Api.Repositories
             return await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<Product> Get(string slug)
+        {
+            return await _context.Products.Find(p => p.Category.Slug.Equals(slug)).FirstOrDefaultAsync();
+        }
+
         private bool disposedValue = false;
 
         public void Dispose()
