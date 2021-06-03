@@ -9,5 +9,6 @@ namespace RentCar.Catalog.Api.Repositories
     {
         Task<IEnumerable<Product>> Get();
         Task<Product> Get(Guid id);
+        Task<Product> Get(string slug);
     }
 }

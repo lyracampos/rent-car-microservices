@@ -29,5 +29,37 @@ namespace RentCar.Catalog.Api.Controllers
             var products = await _repository.Get();
             return Ok(products);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> GetProductById(Guid id)
+        {
+            var product = await _repository.Get(id);
+
+            if (product == null)
+            {
+                _logger.LogError($"Product with id: {id}, not found.");
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+
+        [HttpGet("{slug}")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> GetProductSlug(string slug)
+        {
+            var product = await _repository.Get(slug);
+
+            if (product == null)
+            {
+                _logger.LogError($"Product with id: {slug}, not found.");
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
     }
 }
